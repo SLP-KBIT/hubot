@@ -12,4 +12,10 @@ huboco(ひゅぼ子)は、Hubot製のチャットボットです。
 Let's ChatOps !!
 <br>
 
+## コマンド
+
+<tt>cli/</tt>のRubyスクリプトを実行して、結果を返しています。
+
+- <tt>huboco ping [ip_address]:[port]</tt>: <tt>cli/ping.rb</tt>
+
 アイコンは[In Spirited We Love Icon Se by Raindropmemory](http://raindropmemory.deviantart.com/art/In-Spirited-We-Love-Icon-Set-Repost-304014435)を使っています。

@@ -1,3 +1,6 @@
 node_modules
 .DS_Store*
 bin/hubot-typetalk
+.bundle
+vendor/bundler
+Gemfile.lock
