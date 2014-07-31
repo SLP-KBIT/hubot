@@ -13,6 +13,10 @@ module.exports = ( robot ) ->
 
     cli_ping = spawn( 'ruby', ['cli/ping.rb', ip_address, port] )
     cli_ping.stdout.on 'data', ( data ) ->
-      msg.send data
+      result = String( data )
+      if result is 'true\n'
+        msg.send 'ping通りました(≧▽≦)'
+      else if result is 'false\n'
+        msg.send 'ping通りませんでした(＞＿＜)'
     cli_ping.stderr.on 'data', ( data ) ->
       console.log( 'cli_ruby stderr: ' + data )
