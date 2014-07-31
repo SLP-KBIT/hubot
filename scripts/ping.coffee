@@ -1,26 +1,18 @@
 # Description:
-#   Utility commands surrounding Hubot uptime.
+#   Ping commands to server.
 #
 # Commands:
-#   hubot ping - Reply with pong
-#   hubot echo <text> - Reply back with <text>
-#   hubot time - Reply with current time
-#   hubot die - End hubot process
+#   huboco ping <ip_address>:<port>
 
-module.exports = (robot) ->
-  robot.respond /PING$/i, (msg) ->
-    msg.send "PONG"
+spawn = require( 'child_process' ).spawn
 
-  robot.respond /ADAPTER$/i, (msg) ->
-    msg.send robot.adapterName
+module.exports = ( robot ) ->
+  robot.hear /^huboco ping (.+):([0-9]+)$/i, ( msg ) ->
+    ip_address = msg.match[1]
+    port       = msg.match[2]
 
-  robot.respond /ECHO (.*)$/i, (msg) ->
-    msg.send msg.match[1]
-
-  robot.respond /TIME$/i, (msg) ->
-    msg.send "Server time is: #{new Date()}"
-
-  robot.respond /DIE$/i, (msg) ->
-    msg.send "Goodbye, cruel world."
-    process.exit 0
-
+    cli_ping = spawn( 'ruby', ['cli/ping.rb', ip_address, port] )
+    cli_ping.stdout.on 'data', ( data ) ->
+      msg.send data
+    cli_ping.stderr.on 'data', ( data ) ->
+      console.log( 'cli_ruby stderr: ' + data )
