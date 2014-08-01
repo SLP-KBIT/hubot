@@ -1,1 +1,1 @@
-web: bin/hubot -a campfire -n Hubot
+web: node_modules/.bin/hubot -n Huboco -a typetalk
