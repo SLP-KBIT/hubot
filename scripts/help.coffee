@@ -2,7 +2,7 @@
 #   Generates help commands for Hubot.
 
 module.exports = ( robot ) ->
-  robot.respond /help\s*(.+)?$/i, ( msg ) ->
+  robot.respond /help\s+(.+)?$/i, ( msg ) ->
     cmds   = robot.helpCommands()
     filter = msg.match[1]
 

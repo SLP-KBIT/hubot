@@ -20,6 +20,10 @@ Huboco(ひゅぼ子)は、Hubot製のチャットボットです。
   - <tt>time</tt>：時間を返す。
 - <tt>scripts/help.coffee</tt>
   - <tt>help</tt>：コマンドの一覧を返す。
+- <tt>scripts/anime.coffee</tt>
+  - <tt>anime</tt>：今期放送中のアニメの一覧を返す。
+  - <tt>anime today</tt>：今日放送のアニメの一覧を返す。
+  - <tt>anime search [title]</tt>：今期のアニメをタイトルで検索する。
 
 ## URLS
 
