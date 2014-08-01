@@ -26,25 +26,25 @@ module.exports = (robot) ->
   robot.respond /hello$/i, ( msg ) ->
     hour = new Date().getHours()
 
-    if 5 <= hour and hour < 11
+    if 5 <= hour < 11
       answer = ['GOOD MORNING', 'おはようございます。']
-    else if 11 <= hour and hour < 17
+    else if 11 <= hour < 17
       answer = ['HELLO', 'こんにちは。']
-    else if 17 <= hour and hour < 23
+    else if 17 <= hour < 23
       answer = ['GOOD EVENING', 'こんばんは。']
     else
       answer = ['GOOD NIGHT', 'おやすみなさい。']
 
-    console.log( "[#{new Date}] #{answer[0]}" )
+    console.log "[#{new Date}] #{answer[0]}"
     msg.reply answer[1]
 
   robot.respond /version$/i, ( msg ) ->
     version = robot.version
-    console.log( "[#{new Date}] VERSION #{version}" )
+    console.log "[#{new Date}] VERSION #{version}"
     msg.reply "#{version}です。"
 
   robot.respond /date$/i, ( msg ) ->
-    console.log( "[#{new Date}] DATE" )
+    console.log "[#{new Date}] DATE"
     date = get_date()
 
     str =  "#{date['year']}年#{date['month']}月#{date['date']}日(#{date['day']}) "
@@ -52,7 +52,7 @@ module.exports = (robot) ->
     msg.reply str
 
   robot.respond /time$/i, ( msg ) ->
-    console.log( "[#{new Date}] TIME" )
+    console.log "[#{new Date}] TIME"
     date = get_date()
 
     str = "#{date['hour']}時#{date['min']}分#{date['sec']}秒です。"

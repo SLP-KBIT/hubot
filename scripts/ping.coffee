@@ -10,11 +10,11 @@ module.exports = ( robot ) ->
   robot.respond /ping\s+(.+):([0-9]+)$/i, ( msg ) ->
     ip_address = msg.match[1]
     port       = msg.match[2]
-    cli_ping   = spawn( 'ruby', ['cli/ping.rb', ip_address, port] )
+    cli_ping   = spawn 'ruby', ['cli/ping.rb', ip_address, port]
 
     cli_ping.stdout.on 'data', ( data ) ->
-      result = String( data ).replace( '\n', '' )
-      console.log( "[#{new Date}] PING #{ip_address}:#{port} #{result.toUpperCase()}" )
+      result = String( data ).replace '\n', ''
+      console.log "[#{new Date}] PING #{ip_address}:#{port} #{result.toUpperCase()}"
 
       if result is 'true'
         msg.reply 'ping通りました!'
@@ -22,4 +22,4 @@ module.exports = ( robot ) ->
         msg.reply 'ping通りませんでした…'
 
     cli_ping.stderr.on 'data', ( data ) ->
-      console.log( "[#{new Date}] PING #{ip_address}:#{port} ERROR\n" + data )
+      console.log "[#{new Date}] PING #{ip_address}:#{port} ERROR\n" + data
