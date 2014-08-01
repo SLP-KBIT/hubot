@@ -1,11 +1,11 @@
-# huboco
+# Huboco
 
 <a href="https://raw.githubusercontent.com/hico-horiuchi/huboco/master/icon.png">
   <img src="/../master/icon.png" width="200px" height="auto">
 </a>
 <br>
 
-huboco(ひゅぼ子)は、Hubot製のチャットボットです。
+Huboco(ひゅぼ子)は、Hubot製のチャットボットです。
 <br>
 研究室のチャットルームでの利用を目的に、研究のお手伝いができるよう開発中です。
 
@@ -20,6 +20,12 @@ huboco(ひゅぼ子)は、Hubot製のチャットボットです。
   - <tt>time</tt>：時間を返す。
 - <tt>scripts/help.coffee</tt>
   - <tt>help</tt>：コマンドの一覧を返す。
+
+## URLS
+
+- <tt>scripts/httpd.coffee</tt>
+  - <tt>GET /huboco/info</tt>：Hubocoの紹介ページを表示。
+  - <tt>POST /huboco/ping</tt>：PONG。
 
 ## SpecialThanks
 
