@@ -12,12 +12,14 @@ huboco(ひゅぼ子)は、Hubot製のチャットボットです。
 ## Commands
 
 - <tt>scripts/ping.coffee</tt>
-  - <tt>huboco ping [ip_address]:[port]</tt>：サーバにpingする。(<tt>cli/ping.rb</tt>)
+  - <tt>ping [ip_address]:[port]</tt>：サーバにpingする。(<tt>cli/ping.rb</tt>)
 - <tt>scripts/huboco.coffee</tt>
-  - <tt>huboco hello</tt>：時間に応じた挨拶をする。
-  - <tt>huboco version</tt>：Hubotのバージョンを返す。
-  - <tt>huboco date</tt>：日付と時間を返す。
-  - <tt>huboco time</tt>：時間を返す。
+  - <tt>hello</tt>：時間に応じた挨拶をする。
+  - <tt>version</tt>：Hubotのバージョンを返す。
+  - <tt>date</tt>：日付と時間を返す。
+  - <tt>time</tt>：時間を返す。
+- <tt>scripts/help.coffee</tt>
+  - <tt>help</tt>：コマンドの一覧を返す。
 
 ## SpecialThanks
 
