@@ -9,7 +9,7 @@
 module.exports = ( robot ) ->
   location = process.env.HUBOT_ANIME_LOCATION or 'tokyo'
 
-  get_animemap = ->
+  get_animemap = ( msg ) ->
     d     = new Date
     year  = d.getFullYear()
     month = d.getMonth() + 1; month = "0#{month}" if month < 10
@@ -18,24 +18,27 @@ module.exports = ( robot ) ->
 
     robot.brain.data.anime = {} if not robot.brain.data.anime
     robot.brain.data.anime[location] = {} if not robot.brain.data.anime[location]
-    if not robot.brain.data.anime[location]['date'] or robot.brain.data.anime[location]['date'] < date
+    if not robot.brain.data.anime[location]['list'] or robot.brain.data.anime[location]['date'] < date
       url = "http://animemap.net/api/table/#{location}.json"
-      robot.http( url ).get() ( err, res, body ) ->
-        if res.statusCode isnt 200
-          console.log "[#{d}] ANIME NO RESULT #{location}"
-          msg.reply 'アニメの情報を取得できませんでした…'
-          robot.brain.data.anime[location]['date'] = false
-          robot.brain.data.anime[location]['list'] = false
-        else
-          json = JSON.parse body
+      timer = setInterval ->
+        if robot.brain.data.anime[location]['date'] is date
+          clearInterval timer
+        robot.http( url ).get() ( err, res, body ) ->
+          if res.statusCode isnt 200
+            console.log "[#{d}] ANIME NO RESULT #{location}"
+            msg.reply 'アニメの情報を取得できませんでした…'
+            robot.brain.data.anime[location]['list'] = false
+          else
+            json = JSON.parse body
+            robot.brain.data.anime[location]['list'] = json.response.item
           robot.brain.data.anime[location]['date'] = date
-          robot.brain.data.anime[location]['list'] = json.response.item
-        robot.brain.save
+          robot.brain.save
+      , 500
 
     robot.brain.data.anime[location]['list']
 
   robot.respond /anime$/i, ( msg ) ->
-    animes = get_animemap()
+    animes = get_animemap( msg )
     if animes
       list = []
       console.log "[#{new Date}] ANIME #{location}"
@@ -47,7 +50,7 @@ module.exports = ( robot ) ->
         msg.reply "今期、放送中のアニメは、\n#{list.join '\n'}"
 
   robot.respond /anime\s+today$/i, ( msg ) ->
-    animes = get_animemap()
+    animes = get_animemap( msg )
     if animes
       list = []
       console.log "[#{new Date}] ANIME #{location} TODAY"
@@ -61,7 +64,7 @@ module.exports = ( robot ) ->
 
   robot.respond /anime\s+search\s+(.+)$/i, ( msg ) ->
     keyword = msg.match[1]
-    animes  = get_animemap()
+    animes  = get_animemap( msg )
     if animes
       list = []
       regex = new RegExp keyword, 'i'
