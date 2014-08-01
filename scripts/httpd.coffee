@@ -5,7 +5,7 @@
 #   /huboco/info
 #   /huboco/ping
 
-huboco_info_page = ->
+huboco_info_page = ( robot ) ->
   """
 <!DOCTYPE html>
 <html>
@@ -14,33 +14,39 @@ huboco_info_page = ->
     <meta content="width=device-width, initial-scale=1" name="viewport" />
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" />
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" />
-    <link href="http://fonts.googleapis.com/css?family=Exo:400,800" rel="stylesheet" />
+    <link href="http://fonts.googleapis.com/css?family=Exo:400,400italic,800" rel="stylesheet" />
     <style type="text/css"><!--
       body, h1, h2, h3, h4, text {
         font-family: 'Exo', sans-serif;
         font-weight: 400;
       }
-      .bold {
-        font-family: 'Exo', sans-serif;
-        font-weight: 800;
-      }
+      .bold { font-weight: 800; }
+      .italic{ font-style: italic; }
       .main {
         text-align: center;
         margin: 50px 0;
       }
+      a.black { color: #333333; }
+      a.black:hover {
+        color: #999999;
+        text-decoration: none;
+      }
+      @media screen and (max-width: 970px) {
+        .main { margin: 15px 0; }
+      }
     --></style>
   </head>
   <body>
-    <div class="container main">
+    <div class="container">
       <div class="row">
         <div class="col-md-4"></div>
-        <div class="col-md-4">
+        <div class="col-md-4 main">
           <div class="well">
             <img src="https://raw.githubusercontent.com/hico-horiuchi/huboco/master/icon.png" />
-            <h1 class="bold">Huboco is working !</h1>
-            <a class="btn btn-default btn-lg" href="https://github.com/hico_horiuchi/huboco">
-              <i class="fa fa-github-alt"></i>&nbsp;View the GitHub project
-            </a>
+            <h1 class="bold">Huboco</h1>
+            <p class="italic">Huboco is Hubot #{robot.version}. She works on laboratory and supports your research activities.</p>
+            <p><a class="btn btn-default btn-lg" href="https://github.com/hico-horiuchi/huboco"><i class="fa fa-github"></i>&nbsp;View the GitHub project</a></p>
+            <p>&copy; <a class="black" href="https://twitter.com/hico_horiuchi">hico_horiuchi</a></p>
           </div>
         </div>
         <div class="col-md-4"></div>
@@ -52,7 +58,7 @@ huboco_info_page = ->
 
 module.exports = ( robot ) ->
   robot.router.get "/huboco/info", ( req, res ) ->
-    res.end huboco_info_page()
+    res.end huboco_info_page( robot )
 
   robot.router.post "/huboco/ping", ( req, res ) ->
     res.end "PONG"
