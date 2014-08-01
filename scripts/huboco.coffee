@@ -23,7 +23,7 @@ get_date = ->
   date
 
 module.exports = (robot) ->
-  robot.hear /^@huboco hello$/i, ( msg ) ->
+  robot.respond /hello$/i, ( msg ) ->
     hour = new Date().getHours()
 
     if 5 <= hour and hour < 11
@@ -38,12 +38,12 @@ module.exports = (robot) ->
     console.log( "[#{new Date}] #{answer[0]}" )
     msg.reply answer[1]
 
-  robot.hear /^@huboco version$/i, ( msg ) ->
+  robot.respond /version$/i, ( msg ) ->
     version = robot.version
     console.log( "[#{new Date}] VERSION #{version}" )
     msg.reply "#{version}です。"
 
-  robot.hear /^@huboco date$/i, ( msg ) ->
+  robot.respond /date$/i, ( msg ) ->
     console.log( "[#{new Date}] DATE" )
     date = get_date()
 
@@ -51,7 +51,7 @@ module.exports = (robot) ->
     str += "#{date['hour']}時#{date['min']}分#{date['sec']}秒です。"
     msg.reply str
 
-  robot.hear /^@huboco time$/i, ( msg ) ->
+  robot.respond /time$/i, ( msg ) ->
     console.log( "[#{new Date}] TIME" )
     date = get_date()
 

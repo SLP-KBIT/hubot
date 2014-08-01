@@ -9,4 +9,4 @@ export HUBOT_TYPETALK_CLIENT_SECRET=""
 export HUBOT_TYPETALK_ROOMS=""
 export HUBOT_TYPETALK_API_RATE=100
 
-exec node_modules/.bin/hubot -a typetalk "$@"
+exec node_modules/.bin/hubot --name Huboco -a typetalk "$@"
