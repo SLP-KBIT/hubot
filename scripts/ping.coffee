@@ -14,10 +14,12 @@ module.exports = ( robot ) ->
 
     cli_ping.stdout.on 'data', ( data ) ->
       result = String( data ).replace( '\n', '' )
+      console.log( "[#{new Date}] PING #{ip_address}:#{port} #{result.toUpperCase()}" )
+
       if result is 'true'
         msg.reply 'ping通りました!'
       else if result is 'false'
         msg.reply 'ping通りませんでした…'
 
     cli_ping.stderr.on 'data', ( data ) ->
-      console.log( 'cli_ruby stderr: ' + data )
+      console.log( "[#{new Date}] PING #{ip_address}:#{port} ERROR\n" + data )
