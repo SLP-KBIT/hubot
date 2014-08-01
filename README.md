@@ -13,9 +13,13 @@ Let's ChatOps !!
 
 ## Commands
 
-<tt>cli/</tt>のRubyスクリプトを実行して、結果を返しています。
-
-- <tt>huboco ping [ip_address]:[port]</tt>: <tt>cli/ping.rb</tt>
+- <tt>scripts/ping.coffee</tt>
+  - <tt>huboco ping [ip_address]:[port]</tt>：サーバにpingする。(<tt>cli/ping.rb</tt>)
+- <tt>scripts/huboco.coffee</tt>
+  - <tt>huboco hello</tt>：時間に応じた挨拶をする。
+  - <tt>huboco version</tt>：Hubotのバージョンを返す。
+  - <tt>huboco date</tt>：日付と時間を返す。
+  - <tt>huboco time</tt>：時間を返す。
 
 ## SpecialThanks
 
