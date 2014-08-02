@@ -19,10 +19,10 @@ module.exports = ( robot ) ->
     robot.brain.data.anime = {} if not robot.brain.data.anime
     robot.brain.data.anime[location] = {} if not robot.brain.data.anime[location]
     if not robot.brain.data.anime[location]['list'] or robot.brain.data.anime[location]['date'] < date
-      url = "http://animemap.net/api/table/#{location}.json"
+      url      = "http://animemap.net/api/table/#{location}.json"
+      received = false
       timer = setInterval ->
-        if robot.brain.data.anime[location]['date'] is date
-          clearInterval timer
+        clearInterval timer if received
         robot.http( url ).get() ( err, res, body ) ->
           if res.statusCode isnt 200
             console.log "[#{d}] ANIME NO RESULT #{location}"
@@ -33,6 +33,7 @@ module.exports = ( robot ) ->
             robot.brain.data.anime[location]['list'] = json.response.item
           robot.brain.data.anime[location]['date'] = date
           robot.brain.save
+          received = true
       , 500
 
     robot.brain.data.anime[location]['list']
