@@ -1,6 +1,6 @@
 node_modules
 .DS_Store*
-bin/huboco-typetalk
+bin/huboco
 .bundle
 vendor/bundler
 Gemfile.lock
