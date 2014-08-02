@@ -34,7 +34,7 @@ module.exports = ( robot ) ->
           robot.brain.data.anime[location]['date'] = date
           robot.brain.save
           received = true
-      , 500
+      , 1000
 
     robot.brain.data.anime[location]['list']
 
