@@ -16,7 +16,7 @@ module.exports = ( robot ) ->
     day   = d.getDate()     ; day   = "0#{day}"   if day   < 10
     date  = parseInt( "#{year}#{month}#{day}" )
 
-    robot.brain.data.anime = {} if not robot.brain.data.anime
+    robot.brain.data.anime           = {} if not robot.brain.data.anime
     robot.brain.data.anime[location] = {} if not robot.brain.data.anime[location]
     if not robot.brain.data.anime[location]['list'] or robot.brain.data.anime[location]['date'] < date
       url      = "http://animemap.net/api/table/#{location}.json"
@@ -48,7 +48,7 @@ module.exports = ( robot ) ->
       if list.length is 0
         msg.reply '今期、放送中のアニメはありません。'
       else
-        msg.reply "今期、放送中のアニメは、\n#{list.join '\n'}"
+        msg.reply "今期、放送中のアニメは、\n#{list.join '\n'}\nです。"
 
   robot.respond /anime\s+today$/i, ( msg ) ->
     animes = get_animemap( msg )
@@ -61,7 +61,7 @@ module.exports = ( robot ) ->
       if list.length is 0
         msg.reply '今日、放送のアニメはありません。'
       else
-        msg.reply "今日、放送のアニメは、\n#{list.join '\n'}"
+        msg.reply "今日、放送のアニメは、\n#{list.join '\n'}\nです。"
 
   robot.respond /anime\s+search\s+(.+)$/i, ( msg ) ->
     keyword = msg.match[1]
@@ -76,4 +76,4 @@ module.exports = ( robot ) ->
       if list.length is 0
         msg.reply '検索にヒットするアニメはありません。'
       else
-        msg.reply "検索にヒットしたアニメは、\n#{list.join '\n'}"
+        msg.reply "検索にヒットしたアニメは、\n#{list.join '\n'}\nです。"

@@ -24,6 +24,9 @@ Huboco(ひゅぼ子)は、Hubot製のチャットボットです。
   - <tt>anime</tt>：今期放送中のアニメの一覧を返す。
   - <tt>anime today</tt>：今日放送のアニメの一覧を返す。
   - <tt>anime search [title]</tt>：今期のアニメをタイトルで検索する。
+- <tt>scripts/member.coffee</tt>
+  - <tt>member</tt>：Typetalkのトピックメンバー全員を返す。
+  - <tt>who</tt>：メンバーの中からランダムに1人選び、お願いリプライを送る。
 
 ## URLS
 
