@@ -24,7 +24,11 @@ module.exports = ( robot ) ->
           robot.brain.data.typetalk.members[topic_id] = false
         else
           json = JSON.parse body
-          robot.brain.data.typetalk.members[topic_id] = json.accounts
+          list = []
+          for account in json.accounts
+            continue if account.account.name is robot.name.toLowerCase()
+            list.push account.account
+          robot.brain.data.typetalk.members[topic_id] = list
         robot.brain.save
         received = true
     , 1000
@@ -38,7 +42,7 @@ module.exports = ( robot ) ->
       list = []
       console.log "[#{new Date}] MEMBER #{rooms[0]}"
       for account in members
-        list.push "#{account.account.name} さん"
+        list.push "#{account.name} さん"
       msg.reply "このトピックのメンバーは、\n#{list.join 'と\n'}\nです。"
 
   robot.respond /who$/i, ( msg ) ->
@@ -47,4 +51,4 @@ module.exports = ( robot ) ->
     if members
       id = Math.floor( Math.random() * members.length )
       console.log "[#{new Date}] WHO #{rooms[0]}"
-      msg.send "@#{members[id].account.name} さん、お願いします!"
+      msg.send "@#{members[id].name} さん、お願いします!"
