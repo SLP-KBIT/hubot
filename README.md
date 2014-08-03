@@ -13,28 +13,77 @@ Huboco(ひゅぼ子)は、Hubot製のチャットボットです。
 
 ## Commands
 
-- <tt>scripts/ping.coffee</tt>
-  - <tt>ping [ip_address]:[port]</tt>：サーバにpingする。(<tt>cli/ping.rb</tt>)
-- <tt>scripts/huboco.coffee</tt>
-  - <tt>hello</tt>：時間に応じた挨拶をする。
-  - <tt>version</tt>：Hubotのバージョンを返す。
-  - <tt>date</tt>：日付と時間を返す。
-  - <tt>time</tt>：時間を返す。
-- <tt>scripts/help.coffee</tt>
-  - <tt>help</tt>：コマンドの一覧を返す。
-- <tt>scripts/anime.coffee</tt>
-  - <tt>anime</tt>：今期放送中のアニメの一覧を返す。
-  - <tt>anime today</tt>：今日放送のアニメの一覧を返す。
-  - <tt>anime search [title]</tt>：今期のアニメをタイトルで検索する。
-- <tt>scripts/member.coffee</tt>
-  - <tt>member</tt>：Typetalkのトピックメンバー全員を返す。
-  - <tt>who</tt>：メンバーの中からランダムに1人選び、お願いリプライを送る。
+<table>
+  <thead></thead>
+  <tbody>
+    <tr>
+      <td><tt>scripts/ping.coffee</tt></td>
+      <td><tt>ping [ip_address]:[port]</tt></td>
+      <td>サーバにpingする。(<tt>cli/ping.rb</tt>)</td>
+    </tr>
+    <tr>
+      <td rowspan="4"><tt>scripts/huboco.coffee</tt></td>
+      <td><tt>hello</tt></td>
+      <td>時間に応じた挨拶をする。</td>
+    </tr>
+    <tr>
+      <td><tt>version</tt></td>
+      <td>Hubotのバージョンを返す。</td>
+    </tr>
+    <tr>
+      <td><tt>date</tt></td>
+      <td>日付と時間を返す。</td>
+    </tr>
+    <tr>
+      <td><tt>time</tt></td>
+      <td>時間を返す。</td>
+    </tr>
+    <tr>
+      <td><tt>scripts/help.coffee</tt></td>
+      <td><tt>help</tt></td>
+      <td>コマンドの一覧を返す。</td>
+    </tr>
+    <tr>
+      <td rowspan="3"><tt>scripts/anime.coffee</tt></td>
+      <td><tt>anime</tt></td>
+      <td>今期放送中のアニメの一覧を返す。</td>
+    </tr>
+    <tr>
+      <td><tt>anime today</tt></td>
+      <td>今日放送のアニメの一覧を返す。</td>
+    </tr>
+    <tr>
+      <td><tt>anime search [title]</tt></td>
+      <td>今期のアニメをタイトルで検索する。</td>
+    </tr>
+    <tr>
+      <td rowspan="2"><tt>scripts/member.coffee</tt></td>
+      <td><tt>member</tt></td>
+      <td>Typetalkのトピックメンバー全員を返す。</td>
+    </tr>
+    <tr>
+      <td><tt>who</tt></td>
+      <td>ランダムに1人選び、お願いリプライを送る。</td>
+    </tr>
+  </tbody>
+</table>
 
 ## URLS
 
-- <tt>scripts/httpd.coffee</tt>
-  - <tt>GET /huboco/info</tt>：Hubocoの紹介ページを表示。
-  - <tt>POST /huboco/ping</tt>：PONG。
+<table>
+  <thead></thead>
+  <tbody>
+    <tr>
+      <td rowspan="2"><tt>scripts/httpd.coffee</tt></td>
+      <td><tt>GET /huboco/info</tt></td>
+      <td>Hubocoの紹介ページを表示。</td>
+    </tr>
+    <tr>
+      <td><tt>POST /huboco/ping</tt></td>
+      <td>PONG。</td>
+    </tr>
+  </tbody>
+</table>
 
 ## SpecialThanks
 
