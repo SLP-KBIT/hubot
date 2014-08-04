@@ -7,7 +7,7 @@
 spawn = require( 'child_process' ).spawn
 
 module.exports = ( robot ) ->
-  robot.respond /ping\s+(.+):([0-9]+)$/i, ( msg ) ->
+  robot.respond /ping\s+(.+)[:|\s+]([0-9]+)$/i, ( msg ) ->
     ip_address = msg.match[1]
     port       = msg.match[2]
     cli_ping   = spawn 'ruby', ['cli/ping.rb', ip_address, port]
