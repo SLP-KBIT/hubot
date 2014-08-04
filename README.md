@@ -8,8 +8,26 @@
 Huboco(ひゅぼ子)は、Hubot製のチャットボットです。
 <br>
 研究室のチャットルームでの利用を目的に、研究のお手伝いができるよう開発中です。
+
+## Install
+
+Ubuntu 12.04での簡単な導入説明。
 <br>
-以下、簡単な機能紹介。(実装順)
+一部でRubyを使っているので、Rubyもインストールします。
+
+    $ sudo add-apt-repository ppa:chris-lea/node.js
+    $ sudo apt-get update
+    $ sudo apt-get install nodejs redis-server ruby
+    $ sudo gem install bundler --no-ri --no-rdoc
+    $ sudo npm install -g hubot coffee-script
+    $ git clone git://github.com/hico-horiuchi/huboco.git
+    $ cd huboco
+    $ bundle install
+    $ cp bin/huboco.sample bin/huboco
+    $ bin/huboco
+
+Typetalkを使う場合は、以下を参考に<tt>bin/huboco</tt>にTokenを記述して下さい。
+- [Typetalkでhubotを使う手順 | QUARTET TechBlog](http://tech.quartetcom.co.jp/2014/06/07/338)
 
 ## Commands
 
