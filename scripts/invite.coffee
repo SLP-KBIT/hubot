@@ -137,9 +137,10 @@ module.exports = ( robot ) ->
         console.log "[#{new Date}] INVITE #{mail_address} TO #{topic_id}"
 
   robot.router.get '/typetalk/form', ( req, res ) ->
-    res.end typetalk_form_page( '6707' )
+    rooms = process.env.HUBOT_TYPETALK_ROOMS.split ','
+    res.end typetalk_form_page( rooms[0] )
 
   robot.router.post '/typetalk/invite', ( req, res ) ->
     payload = req.body
     invite_member payload.topicId, payload.mailAddress
-    res.send typetalk_form_page( payload.mailAddress )
+    res.send typetalk_submit_page( payload.mailAddress )
