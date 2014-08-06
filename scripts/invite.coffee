@@ -134,7 +134,7 @@ module.exports = ( robot ) ->
 
     request.post options, ( err, res, body ) =>
       if res.statusCode isnt 200
-        console.log "[#{new Date}] NOT INVITE #{mail_address} TO #{topic_id}"
+        console.log "[#{new Date}] #{res.statusCode} MISS INVITE #{mail_address} TO #{topic_id}"
       else
         console.log "[#{new Date}] INVITE #{mail_address} TO #{topic_id}"
 
