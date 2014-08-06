@@ -70,7 +70,7 @@ module.exports = ( robot ) ->
 </html>
     """
 
-  typetalk_form_page = ( mail_address ) ->
+  typetalk_submit_page = ( mail_address ) ->
     """
 <!DOCTYPE html>
 <html>
