@@ -94,6 +94,16 @@ Herokuでの簡単な導入説明。
       <td>GitLabからのWebHookを通知</td>
     </tr>
  </tbody>
+    <tr>
+      <td rowspan="2"><tt>invite.coffee</tt></td>
+      <td><tt>GET /typetalk/form</tt></td>
+      <td>Typetalkのトピックの招待フォームを表示</td>
+    </tr>
+    <tr>
+      <td><tt>POST /typetalk/invite</tt></td>
+      <td>Typetalkのトピックにメンバーを招待</td>
+    </tr>
+ </tbody>
 </table>
 
 ## SpecialThanks
