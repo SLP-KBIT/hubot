@@ -1,5 +1,5 @@
 # Description:
-#   Show members in chat room.
+#   Show members in Typetalk topic.
 #
 # Commands:
 #   huboco member
@@ -36,19 +36,19 @@ module.exports = ( robot ) ->
     robot.brain.data.typetalk.members[topic_id]
 
   robot.respond /member$/i, ( msg ) ->
-    rooms    = process.env.HUBOT_TYPETALK_ROOMS.split ','
-    members  = get_topic_members rooms[0]
+    topic_id = msg.envelope.room
+    members  = get_topic_members topic_id
     if members
       list = []
-      console.log "[#{new Date}] MEMBER #{rooms[0]}"
+      console.log "[#{new Date}] MEMBER #{topic_id}"
       for account in members
         list.push "#{account.name} さん"
       msg.reply "このトピックのメンバーは、\n#{list.join 'と\n'}\nです。"
 
   robot.respond /who$/i, ( msg ) ->
-    rooms    = process.env.HUBOT_TYPETALK_ROOMS.split ','
-    members  = get_topic_members rooms[0]
+    topic_id = msg.envelope.room
+    members  = get_topic_members topic_id
     if members
       id = Math.floor( Math.random() * members.length )
-      console.log "[#{new Date}] WHO #{rooms[0]}"
+      console.log "[#{new Date}] WHO #{topic_id}"
       msg.send "@#{members[id].name} さん、お願いします!"
