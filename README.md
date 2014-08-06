@@ -86,7 +86,7 @@ Herokuでの簡単な導入説明。
       <td>Hubocoの紹介ページを表示</td>
     </tr>
     <tr>
-      <td><tt>POST /huboco/ping</tt></td>
+      <td><tt>POST /hubot/ping</tt></td>
       <td>PONG</td>
     </tr>
     <tr>

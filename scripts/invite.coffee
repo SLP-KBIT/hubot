@@ -16,6 +16,7 @@ module.exports = ( robot ) ->
     <title>Huboco</title>
     <meta content="width=device-width, initial-scale=1" name="viewport" />
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/lumen/bootstrap.min.css" rel="stylesheet" />
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" />
     <link href="http://fonts.googleapis.com/css?family=Exo:400,400italic,800" rel="stylesheet" />
     <style type="text/css"><!--
@@ -78,6 +79,7 @@ module.exports = ( robot ) ->
     <title>Huboco</title>
     <meta content="width=device-width, initial-scale=1" name="viewport" />
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/lumen/bootstrap.min.css" rel="stylesheet" />
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" />
     <link href="http://fonts.googleapis.com/css?family=Exo:400,400italic,800" rel="stylesheet" />
     <style type="text/css"><!--
