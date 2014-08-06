@@ -5,14 +5,4 @@ set -e
 npm install
 export PATH="node_modules/.bin:node_modules/hubot/node_modules/.bin:$PATH"
 
-# Typetalk
-export HUBOT_TYPETALK_CLIENT_ID=""
-export HUBOT_TYPETALK_CLIENT_SECRET=""
-export HUBOT_TYPETALK_ROOMS=""
-export HUBOT_TYPETALK_API_RATE=100
-
-# HipChat
-export HUBOT_HIPCHAT_JID=""
-export HUBOT_HIPCHAT_PASSWORD=""
-
 exec node_modules/.bin/hubot -n Huboco "$@"
