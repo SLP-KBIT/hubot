@@ -60,5 +60,5 @@ module.exports = ( robot ) ->
   robot.router.get '/huboco/info', ( req, res ) ->
     res.end huboco_info_page
 
-  robot.router.post '/huboco/ping', ( req, res ) ->
+  robot.router.post '/hubot/ping', ( req, res ) ->
     res.end 'PONG'
