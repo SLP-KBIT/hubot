@@ -48,7 +48,7 @@ module.exports = ( robot ) ->
             <img src="http://nulab-inc.com/assets/img/home/img_apps_typetalk@2x.png" />
             <h1 class="bold">Typetalk</h1>
             <p class="italic">I invite you to Typetalk Topic #{topic_id}.</p>
-            <form action="/huboco/typetalk/invite" method="post">
+            <form action="/typetalk/invite" method="post">
               <input type="hidden" name="topicId" value="#{topic_id}">
               <div class="form-group">
                 <div class="input-group">
