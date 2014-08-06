@@ -20,7 +20,7 @@ Herokuでの簡単な導入説明。
     $ heroku config:set HUBOT_TYPETALK_CLIENT_SECRET=""
     $ heroku config:set HUBOT_TYPETALK_ROOMS=""
     $ heroku config:set HUBOT_TYPETALK_API_RATE=100
-    $ git push heroku heroku
+    $ git push heroku heroku:master
 
 ## Commands
 
