@@ -11,40 +11,22 @@ Huboco(ひゅぼ子)は、Hubot製のチャットボットです。
 
 ## Install
 
-Ubuntu 12.04での簡単な導入説明。
-<br>
-一部でRubyを使っているので、Rubyもインストールします。
+Herokuでの簡単な導入説明。
 
-    $ sudo add-apt-repository ppa:chris-lea/node.js
-    $ sudo apt-get update
-    $ sudo apt-get install nodejs redis-server ruby
-    $ sudo gem install bundler --no-ri --no-rdoc
-    $ sudo npm install -g hubot coffee-script
-    $ git clone git://github.com/hico-horiuchi/huboco.git
-    $ cd huboco
-    $ bundle install
-    $ cp bin/huboco.sample bin/huboco
-    $ bin/huboco
-
-## Adapter
-
-以下を参考に、Adapterに応じて<tt>bin/huboco</tt>に設定を追加して下さい。
-
-- Typetalk
-  - [Typetalkでhubotを使う手順 | QUARTET TechBlog](http://tech.quartetcom.co.jp/2014/06/07/338)
-- HipChat
-  - [Hubotをインストール、hipchatと連携し、foreverでデーモン化(CentOS6.4) - コンユウメモ)](http://konyu.hatenablog.com/entry/2014/05/13/214812)
+    $ heroku create --stack cedar huboco
+    $ heroku addons:add redistogo:nano
+    $ heroku config:set HEROKU_URL=http://huboco.herokuapp.com/
+    $ heroku config:set HUBOT_TYPETALK_CLIENT_ID=""
+    $ heroku config:set HUBOT_TYPETALK_CLIENT_SECRET=""
+    $ heroku config:set HUBOT_TYPETALK_ROOMS=""
+    $ heroku config:set HUBOT_TYPETALK_API_RATE=100
+    $ git push heroku heroku
 
 ## Commands
 
 <table>
   <thead></thead>
   <tbody>
-    <tr>
-      <td><tt>ping.coffee</tt></td>
-      <td><tt>ping [ip_address]:[port]</tt></td>
-      <td>サーバにpingする (<tt>cli/ping.rb</tt>)</td>
-    </tr>
     <tr>
       <td rowspan="4"><tt>huboco.coffee</tt></td>
       <td><tt>hello</tt></td>
