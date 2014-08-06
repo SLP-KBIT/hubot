@@ -26,8 +26,14 @@ Ubuntu 12.04での簡単な導入説明。
     $ cp bin/huboco.sample bin/huboco
     $ bin/huboco
 
-Typetalkを使う場合は、以下を参考に<tt>bin/huboco</tt>にTokenを記述して下さい。
-- [Typetalkでhubotを使う手順 | QUARTET TechBlog](http://tech.quartetcom.co.jp/2014/06/07/338)
+## Adapter
+
+以下を参考に、Adapterに応じて<tt>bin/huboco</tt>に設定を追加して下さい。
+
+- Typetalk
+  - [Typetalkでhubotを使う手順 | QUARTET TechBlog](http://tech.quartetcom.co.jp/2014/06/07/338)
+- HipChat
+  - [Hubotをインストール、hipchatと連携し、foreverでデーモン化(CentOS6.4) - コンユウメモ)](http://konyu.hatenablog.com/entry/2014/05/13/214812)
 
 ## Commands
 
