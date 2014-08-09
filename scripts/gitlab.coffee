@@ -22,7 +22,7 @@ module.exports = ( robot ) ->
     console.log "[#{new Date}] GITLAB PUSH #{payload.repository.name}"
     say "#{payload.repository.name} に #{payload.user_name} さんが#{payload.commits.length}件のcommitをpushしました。"
     for commit in payload.commits
-      say "<#{commit.id[0..6]}> #{commit.message}"
+      say "<#{commit.id[0..6]}> #{commit.message} #{commit.url}"
 
   issue = ( payload ) ->
     object = payload.object_attributes
