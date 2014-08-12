@@ -94,7 +94,11 @@ Herokuでの簡単な導入説明。
       <td><tt>POST /gitlab/hook</tt></td>
       <td>GitLabからのWebHookを通知</td>
     </tr>
- </tbody>
+    <tr>
+      <td><tt>github.coffee</tt></td>
+      <td><tt>POST /github/hook</tt></td>
+      <td>GitHubからのWebHookを通知</td>
+    </tr>
     <tr>
       <td rowspan="2"><tt>invite.coffee</tt></td>
       <td><tt>GET /typetalk/form</tt></td>
