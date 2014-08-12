@@ -18,39 +18,35 @@ module.exports = ( robot ) ->
 
   commit_comment = ( payload ) ->
     console.log "[#{new Date}] GITHUB COMMIT COMMENT TO #{payload.repository.name} BY #{payload.sender.login}"
-    say "#{payload.sender.login} さんが #{payload.repository.name} にコメントを書きました。"
-    say payload.comment.html_url
+    say "#{payload.sender.login} さんが #{payload.repository.name} にコメントを書きました。\n#{payload.comment.html_url}"
 
   issue_comment = ( payload ) ->
     console.log "[#{new Date}] GITHUB ISSUE COMMENT TO #{payload.repository.name} ##{payload.issue.number} BY #{payload.sender.login}"
-    say "#{payload.sender.login} さんが #{payload.repository.name} のIssue ##{payload.issue.number} にコメントを書きました。"
-    say payload.comment.html_url
+    say "#{payload.sender.login} さんが #{payload.repository.name} のIssue ##{payload.issue.number} にコメントを書きました。\n#{payload.comment.html_url}"
 
   issues = ( payload ) ->
     switch payload.action
       when 'opened', 'closed', 'reopened'
         console.log "[#{new Date}] GITHUB ISSUE #{payload.action.toUpperCase()} TO #{payload.repository.name} ##{payload.issue.number} BY #{payload.sender.login}"
-        say "#{payload.sender.login} さんが #{payload.repository.name} のIssue ##{payload.issue.number} 「#{payload.issue.title}」 を#{action_jpn( payload.action )}しました。"
-        say payload.issue.html_url
+        say "#{payload.sender.login} さんが #{payload.repository.name} のIssue ##{payload.issue.number} 「#{payload.issue.title}」 を#{action_jpn( payload.action )}しました。\n#{payload.issue.html_url}"
 
   pull_request = ( payload ) ->
     switch payload.action
       when 'opened', 'closed', 'reopened'
         console.log "[#{new Date}] GITHUB PULL REQUEST #{payload.action.toUpperCase()} TO #{payload.repository.name} ##{payload.pull_request.number} BY #{payload.sender.login}"
-        say "#{payload.sender.login} さんが #{payload.repository.name} のPullRequest ##{payload.pull_request.number} 「#{payload.pull_request.title}」 を#{action_jpn( payload.action )}しました。"
-        say payload.pull_request.html_url
+        say "#{payload.sender.login} さんが #{payload.repository.name} のPullRequest ##{payload.pull_request.number} 「#{payload.pull_request.title}」 を#{action_jpn( payload.action )}しました。\n#{payload.pull_request.html_url}"
 
   pull_request_review_comment = ( payload ) ->
     console.log "[#{new Date}] GITHUB PULL REQUEST COMMENT TO #{payload.repository.name} ##{payload.pull_request.number} BY #{payload.sender.login}"
-    say "#{payload.sender.login} さんが #{payload.repository.name} のPullRequest ##{payload.pull_request.number} にコメントを書きました。"
-    say payload.comment.html_url
+    say "#{payload.sender.login} さんが #{payload.repository.name} のPullRequest ##{payload.pull_request.number} にコメントを書きました。\n#{payload.comment.html_url}"
 
   push = ( payload ) ->
     console.log "[#{new Date}] GITHUB PUSH TO #{payload.repository.name} BY #{payload.pusher.name}"
-    say "#{payload.pusher.name} さんが #{payload.repository.name} に#{payload.commits.length}件のcommitをpushしました。"
+    message = "#{payload.pusher.name} さんが #{payload.repository.name} に#{payload.commits.length}件のcommitをpushしました。"
     for commit in payload.commits
-      say "<#{commit.id[0..6]}> #{commit.message}"
-    say payload.compare
+      message += "\n<#{commit.id[0..6]}> #{commit.message}"
+    message += "\n#{payload.compare}"
+    say message
 
   robot.router.post '/github/hook', ( req, res ) ->
     event   = req.headers['x-github-event']
