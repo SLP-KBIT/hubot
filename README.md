@@ -91,17 +91,17 @@ Herokuでの簡単な導入説明。
     </tr>
     <tr>
       <td><tt>gitlab.coffee</tt></td>
-      <td><tt>POST /gitlab/hook</tt></td>
+      <td><tt>POST /gitlab/hook?room=&lt;room&gt;</tt></td>
       <td>GitLabからのWebHookを通知</td>
     </tr>
     <tr>
       <td><tt>github.coffee</tt></td>
-      <td><tt>POST /github/hook</tt></td>
+      <td><tt>POST /github/hook?room=&lt;room&gt;</tt></td>
       <td>GitHubからのWebHookを通知</td>
     </tr>
     <tr>
       <td rowspan="2"><tt>invite.coffee</tt></td>
-      <td><tt>GET /typetalk/form</tt></td>
+      <td><tt>GET /typetalk/form?topic_id=&lt;topic_id&gt;</tt></td>
       <td>Typetalkのトピックの招待フォームを表示</td>
     </tr>
     <tr>

@@ -2,7 +2,10 @@
 #   Notify GitLab activites by Web hooks.
 #
 # URLS:
-#   /gitlab/hook
+#   /gitlab/hook?room=<room>
+
+url = require( 'url' )
+querystring = require( 'querystring' )
 
 state_jpn = ( state ) ->
   switch state
@@ -13,34 +16,37 @@ state_jpn = ( state ) ->
     when 'merged'   then return 'マージ'
 
 module.exports = ( robot ) ->
-  say = ( message ) ->
-    rooms    = process.env.HUBOT_TYPETALK_ROOMS.split ','
-    envelope = room: rooms[0]
+  say = ( room, message ) ->
+    envelope = room: room
     robot.send envelope, message
 
   push = ( payload ) ->
     console.log "[#{new Date}] GITLAB PUSH #{payload.repository.name}"
-    say "#{payload.repository.name} に #{payload.user_name} さんが#{payload.commits.length}件のcommitをpushしました。"
+    "#{payload.repository.name} に #{payload.user_name} さんが#{payload.commits.length}件のcommitをpushしました。"
     for commit in payload.commits
-      say "<#{commit.id[0..6]}> #{commit.message} #{commit.url}"
+      "<#{commit.id[0..6]}> #{commit.message} #{commit.url}"
 
   issue = ( payload ) ->
     object = payload.object_attributes
     console.log "[#{new Date}] GITLAB ISSUE #{object.state.toUpperCase()}"
-    say "Issue ##{object.iid} 「#{object.title}」 が#{state_jpn( object.state )}されました。"
+    "Issue ##{object.iid} 「#{object.title}」 が#{state_jpn( object.state )}されました。"
 
   merge_request = ( payload ) ->
     object = payload.object_attributes
     console.log "[#{new Date}] GITLAB MERGE REQUEST #{object.state.toUpperCase()}"
-    say "MergeRequest ##{object.iid} 「#{object.title}」 が#{state_jpn( object.state )}されました。"
+    "MergeRequest ##{object.iid} 「#{object.title}」 が#{state_jpn( object.state )}されました。"
 
   robot.router.post '/gitlab/hook', ( req, res ) ->
+    query   = querystring.parse url.parse( req.url ).query
+    room    = query.room
     payload = req.body
     event   = payload.object_kind
+    res.send 404 unless room
 
     switch event
-      when 'issue'         then issue         payload
-      when 'merge_request' then merge_request payload
-      else                      push          payload
+      when 'issue'         then message = issue         payload
+      when 'merge_request' then message = merge_request payload
+      else                      message = push          payload
 
+    say room, message
     res.send 200
