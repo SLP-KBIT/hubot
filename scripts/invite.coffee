@@ -2,10 +2,12 @@
 #   Invite member to Typetalk topic.
 #
 # URLS:
-#   /typetalk/form
+#   /typetalk/form?topic_id=<topic_id>
 #   /typetalk/invite
 
-request = require 'request'
+request     = require 'request'
+url         = require( 'url' )
+querystring = require( 'querystring' )
 
 module.exports = ( robot ) ->
   typetalk_form_page = ( topic_id ) ->
@@ -139,10 +141,12 @@ module.exports = ( robot ) ->
         console.log "[#{new Date}] INVITE #{mail_address} TO #{topic_id}"
 
   robot.router.get '/typetalk/form', ( req, res ) ->
-    rooms = process.env.HUBOT_TYPETALK_ROOMS.split ','
-    res.end typetalk_form_page( rooms[0] )
+    query    = querystring.parse url.parse( req.url ).query
+    topic_id = query.topic_id
+    res.send 404 unless topic_id
+    res.end typetalk_form_page( topic_id )
 
   robot.router.post '/typetalk/invite', ( req, res ) ->
     payload = req.body
     invite_member payload.topicId, payload.mailAddress
-    res.send typetalk_submit_page( payload.mailAddress )
+    res.end typetalk_submit_page( payload.mailAddress )
