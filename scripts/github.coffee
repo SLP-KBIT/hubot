@@ -12,6 +12,8 @@ action_jpn = ( action ) ->
     when 'opened'   then return 'オープン'
     when 'closed'   then return 'クローズ'
     when 'reopened' then return '再オープン'
+    when 'created'  then return '作成'
+    when 'edited'   then return '編集'
 
 module.exports = ( robot ) ->
   say = ( room, message ) ->
@@ -21,6 +23,13 @@ module.exports = ( robot ) ->
   commit_comment = ( payload ) ->
     console.log "[#{new Date}] GITHUB COMMIT COMMENT TO #{payload.repository.name} BY #{payload.sender.login}"
     "#{payload.sender.login} さんが #{payload.repository.name} にコメントを書きました。\n#{payload.comment.html_url}"
+
+  gollum = ( payload ) ->
+    console.log "[#{new Date}] GITHUB GOLLUM #{payload.repository.name} BY #{payload.sender.login}"
+    message = "#{payload.sender.login} さんが #{payload.repository.name} に#{payload.pages.length}件のwikiを更新しました。"
+    for page in payload.pages
+      message += "\n[#{action_jpn( page.action )}] #{page.page_name} #{page.html_url}"
+    message
 
   issue_comment = ( payload ) ->
     console.log "[#{new Date}] GITHUB ISSUE COMMENT TO #{payload.repository.name} ##{payload.issue.number} BY #{payload.sender.login}"
@@ -59,6 +68,7 @@ module.exports = ( robot ) ->
 
     switch event
       when 'commit_comment'              then message = commit_comment              payload
+      when 'gollum'                      then message = gollum                      payload
       when 'issue_comment'               then message = issue_comment               payload
       when 'issues'                      then message = issues                      payload
       when 'pull_request'                then message = pull_request                payload
