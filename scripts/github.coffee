@@ -75,5 +75,5 @@ module.exports = ( robot ) ->
       when 'pull_request_review_comment' then message = pull_request_review_comment payload
       when 'push'                        then message = push                        payload
 
-    say room, message
+    say room, message if message
     res.send 200
