@@ -48,5 +48,5 @@ module.exports = ( robot ) ->
       when 'merge_request' then message = merge_request payload
       else                      message = push          payload
 
-    say room, message
+    say room, message if message
     res.send 200
