@@ -21,10 +21,11 @@
     "url": "https://github.com/github/hubot.git"
   },
   "dependencies": {
-    "hubot": ">= 2.6.0 < 3.0.0",
-    "hubot-scripts": ">= 2.5.0 < 3.0.0",
-    "hubot-typetalk": "git://github.com/hico-horiuchi/hubot-typetalk.git",
-    "request": "^2.39.0"
+    "hubot": ">=2.8.1",
+    "hubot-hipchat": "^2.7.5",
+    "hubot-scripts": ">=2.5.16",
+    "hubot-typetalk": "0.0.2",
+    "request": "^2.42.0"
   },
   "engines": {
     "node": ">= 0.8.x",
