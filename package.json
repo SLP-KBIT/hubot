@@ -24,7 +24,7 @@
     "hubot": ">=2.8.1",
     "hubot-hipchat": "^2.7.5",
     "hubot-scripts": ">=2.5.16",
-    "hubot-typetalk": "0.0.2",
+    "hubot-typetalk": "git://github.com/hico-horiuchi/hubot-typetalk.git",
     "request": "^2.42.0"
   },
   "engines": {
