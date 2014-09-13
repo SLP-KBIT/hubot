@@ -69,7 +69,7 @@ Herokuでの簡単な導入説明。
       <td>Typetalkのトピックメンバー全員を返す</td>
     </tr>
     <tr>
-      <td><tt>who</tt></td>
+      <td><tt>member pick</tt></td>
       <td>ランダムに1人選び、お願いリプライを送る</td>
     </tr>
   </tbody>

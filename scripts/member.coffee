@@ -45,7 +45,7 @@ module.exports = ( robot ) ->
         list.push "#{account.name} さん"
       msg.reply "このトピックのメンバーは、\n#{list.join 'と\n'}\nです。"
 
-  robot.respond /who$/i, ( msg ) ->
+  robot.respond /member\ pick$/i, ( msg ) ->
     topic_id = msg.envelope.room
     members  = get_topic_members topic_id
     if members
