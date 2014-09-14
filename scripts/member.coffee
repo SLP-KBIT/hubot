@@ -42,8 +42,8 @@ module.exports = ( robot ) ->
       list = []
       console.log "[#{new Date}] MEMBER #{topic_id}"
       for account in members
-        list.push "#{account.name} さん"
-      msg.reply "このトピックのメンバーは、\n#{list.join 'と\n'}\nです。"
+        list.push "#{account.fullName} (#{account.name})"
+      msg.reply "このトピックのメンバーは、\n#{list.join '\n'}\nです。"
 
   robot.respond /member\ pick$/i, ( msg ) ->
     topic_id = msg.envelope.room
@@ -51,4 +51,4 @@ module.exports = ( robot ) ->
     if members
       id = Math.floor( Math.random() * members.length )
       console.log "[#{new Date}] WHO #{topic_id}"
-      msg.send "@#{members[id].name} さん、お願いします!"
+      msg.send "@#{members[id].name} #{members[id].fullName} さん、お願いします!"
