@@ -1,7 +1,7 @@
 # Huboco
 
-<a href="https://raw.githubusercontent.com/hico-horiuchi/huboco/master/icon.png">
-  <img src="/../master/icon.png" width="200px" height="auto">
+<a href="https://raw.githubusercontent.com/hico-horiuchi/huboco/master/images/icon.png">
+  <img src="/../master/images/icon.png" width="200px" height="auto">
 </a>
 <br>
 

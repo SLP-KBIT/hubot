@@ -44,7 +44,7 @@ module.exports = ( robot ) ->
         <div class="col-md-4"></div>
         <div class="col-md-4 main">
           <div class="well">
-            <img src="https://raw.githubusercontent.com/hico-horiuchi/huboco/master/icon.png" />
+            <img src="https://raw.githubusercontent.com/hico-horiuchi/huboco/master/images/icon.png" />
             <h1 class="bold">Huboco</h1>
             <p class="italic">Huboco is Hubot #{robot.version}. She works on laboratory and supports your research activities.</p>
             <p><a class="btn btn-default btn-lg" href="https://github.com/hico-horiuchi/huboco"><i class="fa fa-github"></i>&nbsp;View the GitHub project</a></p>
