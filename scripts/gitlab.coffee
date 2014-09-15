@@ -41,6 +41,7 @@ module.exports = ( robot ) ->
     room    = query.room
     payload = req.body
     event   = payload.object_kind
+    message = ''
     res.send 404 unless room
 
     switch event

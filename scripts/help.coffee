@@ -11,7 +11,7 @@ module.exports = ( robot ) ->
         cmd.match new RegExp filter, 'i'
       if cmds.length == 0
         console.log "[#{new Date}] HELP NOT MATCH #{filter}"
-        msg.reply "#{filter}ってコマンドはありませんよ!"
+        msg.reply "#{filter} ってコマンドはありませんよ!"
         return
       else
         console.log "[#{new Date}] HELP FILTER #{filter}"

@@ -108,6 +108,11 @@ Herokuでの簡単な導入説明。
       <td><tt>POST /typetalk/invite</tt></td>
       <td>Typetalkのトピックにメンバーを招待</td>
     </tr>
+    <tr>
+      <td><tt>sensu.coffee</tt></td>
+      <td><tt>POST /sensu?room=&lt;room&gt;</tt></td>
+      <td>SensuのAlertを通知</td>
+    </tr>
  </tbody>
 </table>
 

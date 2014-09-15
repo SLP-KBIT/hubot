@@ -64,6 +64,7 @@ module.exports = ( robot ) ->
     room    = query.room
     event   = req.headers['x-github-event']
     payload = req.body
+    message = ''
     res.send 404 unless room
 
     switch event
