@@ -5,12 +5,12 @@
 #   /typetalk/form?topic_id=<topic_id>
 #   /typetalk/invite
 
-request     = require 'request'
-url         = require( 'url' )
-querystring = require( 'querystring' )
+request = require 'request'
+url = require 'url'
+querystring = require 'querystring'
 
-module.exports = ( robot ) ->
-  typetalk_form_page = ( topic_id ) ->
+module.exports = (robot) ->
+  form_page = (topic_id) ->
     """
 <!DOCTYPE html>
 <html>
@@ -52,11 +52,11 @@ module.exports = ( robot ) ->
             <h1 class="bold">Typetalk</h1>
             <p class="italic">I invite you to Typetalk Topic #{topic_id}.</p>
             <form action="/typetalk/invite" method="post">
-              <input type="hidden" name="topicId" value="#{topic_id}">
+              <input type="hidden" name="topic_id" value="#{topic_id}">
               <div class="form-group">
                 <div class="input-group">
                   <span class="input-group-addon"><i class="fa fa-envelope fa-fw"></i></span>
-                  <input type="text" class="form-control" name="mailAddress" placeholder="Your mail address...">
+                  <input type="text" class="form-control" name="mail_address" placeholder="Your mail address...">
                   <span class="input-group-btn">
                     <button class="btn btn-default" type="submit"><i class="fa fa-send fa-fw"></i></button>
                   </span>
@@ -73,7 +73,7 @@ module.exports = ( robot ) ->
 </html>
     """
 
-  typetalk_submit_page = ( mail_address ) ->
+  submit_page = (mail_address) ->
     """
 <!DOCTYPE html>
 <html>
@@ -124,29 +124,31 @@ module.exports = ( robot ) ->
 </html>
     """
 
-  invite_member = ( topic_id, mail_address ) ->
+  say = (room, message) ->
+    envelope = room: room
+    robot.send envelope, message
+
+  invite_member = (topic_id, mail_address) ->
     access_token = robot.adapter.bot.accessToken
     options =
       url: "https://typetalk.in/api/v1/topics/#{topic_id}/members/invite"
       form:
-        'inviteMembers[0]': mail_address,
+        'inviteMembers[0]': mail_address
         'inviteMessage': ''
       headers:
         'Authorization': "Bearer #{access_token}"
 
-    request.post options, ( err, res, body ) =>
-      if res.statusCode isnt 200
-        console.log "[#{new Date}] #{res.statusCode} MISS INVITE #{mail_address} TO #{topic_id}"
-      else
-        console.log "[#{new Date}] INVITE #{mail_address} TO #{topic_id}"
+    request.post options, (err, res, body) ->
+      if res.statusCode is 200
+        say parseInt(topic_id), "Invited #{mail_address}."
 
-  robot.router.get '/typetalk/form', ( req, res ) ->
-    query    = querystring.parse url.parse( req.url ).query
+  robot.router.get '/typetalk/form', (req, res) ->
+    query    = querystring.parse url.parse(req.url).query
     topic_id = query.topic_id
     res.send 404 unless topic_id
-    res.end typetalk_form_page( topic_id )
+    res.end form_page(topic_id)
 
-  robot.router.post '/typetalk/invite', ( req, res ) ->
+  robot.router.post '/typetalk/invite', (req, res) ->
     payload = req.body
-    invite_member payload.topicId, payload.mailAddress
-    res.end typetalk_submit_page( payload.mailAddress )
+    invite_member payload.topic_id, payload.mail_address
+    res.end submit_page(payload.mail_address)

@@ -5,7 +5,7 @@
 #   /huboco/info
 #   /huboco/ping
 
-module.exports = ( robot ) ->
+module.exports = (robot) ->
   huboco_info_page =
     """
 <!DOCTYPE html>
@@ -58,8 +58,8 @@ module.exports = ( robot ) ->
 </html>
     """
 
-  robot.router.get '/huboco/info', ( req, res ) ->
+  robot.router.get '/huboco/info', (req, res) ->
     res.end huboco_info_page
 
-  robot.router.post '/hubot/ping', ( req, res ) ->
+  robot.router.post '/hubot/ping', (req, res) ->
     res.end 'PONG'

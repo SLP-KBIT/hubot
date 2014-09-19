@@ -2,53 +2,55 @@
 #   Show members in Typetalk topic.
 #
 # Commands:
-#   huboco member
-#   huboco who
+#   hubot member - Show all members in current topic.
+#   hubot member pick - Pick member from current topic.
 
-module.exports = ( robot ) ->
-  get_topic_members = ( topic_id ) ->
-    url          = "https://typetalk.in/api/v1/topics/#{topic_id}/members/status"
+name = (account) ->
+  "#{account.fullName} (#{account.name})"
+
+module.exports = (robot) ->
+  topic_members = (topic_id) ->
+    url = "https://typetalk.in/api/v1/topics/#{topic_id}/members/status"
     access_token = robot.adapter.bot.accessToken
-    received     = false
-    header       = Authorization: "Bearer #{access_token}"
+    header = Authorization: "Bearer #{access_token}"
+    received = false
 
-    robot.brain.data.typetalk         = {} if not robot.brain.data.typetalk
-    robot.brain.data.typetalk.members = {} if not robot.brain.data.typetalk.members
+    robot.brain.data.typetalk = {} unless robot.brain.data.typetalk
 
     timer = setInterval ->
       clearInterval timer if received
-      robot.http( url ).headers( header ).get() ( err, res, body ) =>
-        if res.statusCode isnt 200
-          console.log "[#{d}] MEMBERS NO RESULT #{topic_id}"
-          msg.reply 'メンバーの情報を取得できませんでした…'
-          robot.brain.data.typetalk.members[topic_id] = false
-        else
+      robot.http(url).headers(header).get() (err, res, body) ->
+        if res.statusCode is 200
           json = JSON.parse body
           list = []
-          for account in json.accounts
-            continue if account.account.name is robot.name.toLowerCase()
-            list.push account.account
-          robot.brain.data.typetalk.members[topic_id] = list
+          for item in json.accounts
+            continue if item.account.name is robot.name.toLowerCase()
+            list.push item.account
+          robot.brain.data.typetalk[topic_id] = list
+        else
+          robot.brain.data.typetalk[topic_id] = false
         robot.brain.save
-        received = true
+      received = true
     , 1000
 
-    robot.brain.data.typetalk.members[topic_id]
+    robot.brain.data.typetalk[topic_id]
 
-  robot.respond /member$/i, ( msg ) ->
+  robot.respond /member$/i, (msg) ->
     topic_id = msg.envelope.room
-    members  = get_topic_members topic_id
-    if members
-      list = []
-      console.log "[#{new Date}] MEMBER #{topic_id}"
-      for account in members
-        list.push "#{account.fullName} (#{account.name})"
-      msg.reply "このトピックのメンバーは、\n#{list.join '\n'}\nです。"
+    members = topic_members topic_id
+    unless members
+      msg.reply 'Error occurred while getting members.'
+      return
 
-  robot.respond /member\ pick$/i, ( msg ) ->
+    list = (name account for account in members)
+    msg.reply '\n' + list.join '\n'
+
+  robot.respond /member\ pick$/i, (msg) ->
     topic_id = msg.envelope.room
-    members  = get_topic_members topic_id
-    if members
-      id = Math.floor( Math.random() * members.length )
-      console.log "[#{new Date}] WHO #{topic_id}"
-      msg.send "@#{members[id].name} #{members[id].fullName} さん、お願いします!"
+    members = topic_members topic_id
+    unless members
+      msg.reply 'Error occurred while getting members.'
+      return
+
+    id = Math.floor(Math.random() * members.length)
+    msg.send "@#{members[id].name} Please #{members[id].fullName}."

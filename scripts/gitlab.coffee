@@ -4,50 +4,47 @@
 # URLS:
 #   /gitlab/hook?room=<room>
 
-url = require( 'url' )
-querystring = require( 'querystring' )
+url = require 'url'
+querystring = require 'querystring'
 
-state_jpn = ( state ) ->
-  switch state
-    when 'opened'   then return 'オープン'
-    when 'updated'  then return 'アップデート'
-    when 'closed'   then return 'クローズ'
-    when 'reopened' then return '再オープン'
-    when 'merged'   then return 'マージ'
+capitalize = (text) ->
+  text.charAt(0).toUpperCase() + text.slice(1)
 
-module.exports = ( robot ) ->
-  say = ( room, message ) ->
+push = (payload) ->
+  msg = "#{payload.user_name} pushed #{payload.commits.length} commits "
+  msg += "#{payload.repository.name}."
+  for commit in payload.commits
+    msg += "\n<#{commit.id[0..6]}> #{commit.message} #{commit.url}"
+  msg
+
+issue = (payload) ->
+  object = payload.object_attributes
+  msg = "#{capitalize object.state} Issue ##{object.iid} "
+  msg += "'#{object.title}'.\n#{object.url}"
+
+merge_request = (payload) ->
+  object = payload.object_attributes
+  msg = "#{capitalize object.state} MergeRequest ##{object.iid} "
+  msg += "'#{object.title}'.\n"
+
+module.exports = (robot) ->
+  say = (room, message) ->
     envelope = room: room
-    robot.send envelope, message
+    robot.send envelope, '[GitLab] ' + message
 
-  push = ( payload ) ->
-    console.log "[#{new Date}] GITLAB PUSH #{payload.repository.name}"
-    "#{payload.repository.name} に #{payload.user_name} さんが#{payload.commits.length}件のcommitをpushしました。"
-    for commit in payload.commits
-      "<#{commit.id[0..6]}> #{commit.message} #{commit.url}"
-
-  issue = ( payload ) ->
-    object = payload.object_attributes
-    console.log "[#{new Date}] GITLAB ISSUE #{object.state.toUpperCase()}"
-    "Issue ##{object.iid} 「#{object.title}」 が#{state_jpn( object.state )}されました。"
-
-  merge_request = ( payload ) ->
-    object = payload.object_attributes
-    console.log "[#{new Date}] GITLAB MERGE REQUEST #{object.state.toUpperCase()}"
-    "MergeRequest ##{object.iid} 「#{object.title}」 が#{state_jpn( object.state )}されました。"
-
-  robot.router.post '/gitlab/hook', ( req, res ) ->
-    query   = querystring.parse url.parse( req.url ).query
-    room    = query.room
+  robot.router.post '/gitlab/hook', (req, res) ->
+    query   = querystring.parse url.parse(req.url).query
+    room = query.room
     payload = req.body
-    event   = payload.object_kind
-    message = ''
+    event = payload.object_kind
     res.send 404 unless room
 
     switch event
-      when 'issue'         then message = issue         payload
-      when 'merge_request' then message = merge_request payload
-      else                      message = push          payload
+      when 'issue'
+        say room, issue(payload)
+      when 'merge_request'
+        say room, merge_request(payload)
+      else
+        say room, push(payload)
 
-    say room, message if message
     res.send 200

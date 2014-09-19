@@ -2,58 +2,33 @@
 #   Show huboco's information.
 #
 # Commands:
-#   huboco hello
-#   huboco version
-#   huboco date
-#   huboco time
+#   hubot hello - Reply suitable greeting to current time.
+#   hubot version - Show Hubot version.
+#   hubot date - Show current date.
+#   hubot time - Show current time.
 
-get_date = ->
-  d = new Date
-  days = ['日', '月', '火', '水', '木', '金', '土']
-  date = []
-
-  date['year']  = d.getFullYear()
-  date['month'] = d.getMonth() + 1
-  date['date']  = d.getDate()
-  date['hour']  = d.getHours()
-  date['min']   = d.getMinutes()
-  date['sec']   = d.getSeconds()
-  date['day']   = days[d.getDay()]
-
-  date
+strftime = require 'strftime'
 
 module.exports = (robot) ->
   robot.respond /hello$/i, ( msg ) ->
     hour = new Date().getHours()
 
     if 5 <= hour < 11
-      answer = ['GOOD MORNING', 'おはようございます。']
-    else if 11 <= hour < 17
-      answer = ['HELLO', 'こんにちは。']
-    else if 17 <= hour < 23
-      answer = ['GOOD EVENING', 'こんばんは。']
-    else
-      answer = ['GOOD NIGHT', 'おやすみなさい。']
-
-    console.log "[#{new Date}] #{answer[0]}"
-    msg.reply answer[1]
+      msg.reply 'Good morning.'
+      return
+    if 11 <= hour < 17
+      msg.reply 'Hello.'
+      return
+    if 17 <= hour < 23
+      msg.reply 'Good evening.'
+      return
+    msg.reply 'Good night.'
 
   robot.respond /version$/i, ( msg ) ->
-    version = robot.version
-    console.log "[#{new Date}] VERSION #{version}"
-    msg.reply "#{version}です。"
+    msg.reply "I am Hubot version #{robot.version}."
 
   robot.respond /date$/i, ( msg ) ->
-    console.log "[#{new Date}] DATE"
-    date = get_date()
-
-    str =  "#{date['year']}年#{date['month']}月#{date['date']}日(#{date['day']}) "
-    str += "#{date['hour']}時#{date['min']}分#{date['sec']}秒です。"
-    msg.reply str
+    msg.reply strftime '%Y/%m/%d(%a) %H:%M:%S'
 
   robot.respond /time$/i, ( msg ) ->
-    console.log "[#{new Date}] TIME"
-    date = get_date()
-
-    str = "#{date['hour']}時#{date['min']}分#{date['sec']}秒です。"
-    msg.reply str
+    msg.reply strftime '%H:%M:%S'

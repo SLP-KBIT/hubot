@@ -4,24 +4,23 @@
 # URLS:
 #   /sensu?room=<room>
 
-url = require( 'url' )
-querystring = require( 'querystring' )
+url = require 'url'
+querystring = require 'querystring'
 
-module.exports = ( robot ) ->
-  say = ( room, message ) ->
+module.exports = (robot) ->
+  say = (room, message) ->
     envelope = room: room
-    robot.send envelope, message
+    robot.send envelope, '[Sensu] ' + message
 
-  robot.router.post '/sensu', ( req, res ) ->
-    query   = querystring.parse url.parse( req.url ).query
-    room    = query.room
+  robot.router.post '/sensu', (req, res) ->
+    query = querystring.parse url.parse(req.url).query
+    room = query.room
     payload = req.body
-    message = ''
     res.send 404 unless room
 
     if payload.occurrences is 1
-      console.log "[#{new Date}] SENSU #{payload.client.name} #{payload.check.name}"
-      message = "#{payload.client.name} で #{payload.check.name} のアラートが発生しました!\n#{payload.check.output}"
-      say room, message if message
+      msg = "Alert of #{payload.check.name} occuerrd"
+      msg += " in #{payload.client.name}.\n#{payload.check.output}"
+      say room, msg
 
     res.send 200

@@ -4,77 +4,71 @@
 # URLS:
 #   /github/hook?room=<room>
 
-url = require( 'url' )
-querystring = require( 'querystring' )
+url = require 'url'
+querystring = require 'querystring'
 
-action_jpn = ( action ) ->
-  switch action
-    when 'opened'   then return 'オープン'
-    when 'closed'   then return 'クローズ'
-    when 'reopened' then return '再オープン'
-    when 'created'  then return '作成'
-    when 'edited'   then return '編集'
+commit_comment = (p) ->
+  msg = "#{p.sender.login} commented to #{p.repository.name}.\n"
+  msg += p.comment.html_url
 
-module.exports = ( robot ) ->
-  say = ( room, message ) ->
+gollum = (p) ->
+  msg = "#{p.sender.login} changed #{p.pages.length} pages "
+  msg += "of #{p.repository.name} Wiki."
+  for page in p.pages
+    msg += "\n[#{action_jpn(page.action)}] #{page.page_name} #{page.html_url}"
+  msg
+
+issue_comment = (p) ->
+  msg = "#{p.sender.login} commented to Issue ##{p.issue.number} "
+  msg += "of #{p.repository.name}.\n#{p.comment.html_url}"
+
+issues = (p) ->
+  if p.action.indexOf ['opened', 'closed', 'reopened']
+    msg = "#{p.sender.login} #{p.action} Issue ##{p.issue.number} "
+    msg += "'#{p.issue.title}'\n.#{p.issue.html_url}"
+
+pull_request = (p) ->
+  if p.action.indexOf ['opened', 'closed', 'reopened']
+    msg = "#{p.sender.login} #{p.action} PullRequest ##{p.pull_request.number} "
+    msg += "'#{p.pull_request.title}'\n.#{p.pull_request.html_url}"
+
+pull_request_review_comment = (p) ->
+  msg = "#{p.sender.login} commented to PullRequest ##{p.pull_request.number} "
+  msg += "of #{p.repository.name}.\n#{p.comment.html_url}"
+
+push = (p) ->
+  msg = "#{p.sender.login} pushed #{p.commits.length} commits "
+  msg += "to #{p.repository.name}.\n"
+  for commit in p.commits
+    msg += "\n<#{commit.id[0..6]}> #{commit.message}"
+  msg += "\n#{p.compare}"
+
+module.exports = (robot) ->
+  say = (room, message) ->
     envelope = room: room
-    robot.send envelope, message
+    robot.send envelope, '[GitHub] ' + message
 
-  commit_comment = ( payload ) ->
-    console.log "[#{new Date}] GITHUB COMMIT COMMENT TO #{payload.repository.name} BY #{payload.sender.login}"
-    "#{payload.sender.login} さんが #{payload.repository.name} にコメントを書きました。\n#{payload.comment.html_url}"
-
-  gollum = ( payload ) ->
-    console.log "[#{new Date}] GITHUB GOLLUM #{payload.repository.name} BY #{payload.sender.login}"
-    message = "#{payload.sender.login} さんが #{payload.repository.name} に#{payload.pages.length}件のwikiを更新しました。"
-    for page in payload.pages
-      message += "\n[#{action_jpn( page.action )}] #{page.page_name} #{page.html_url}"
-    message
-
-  issue_comment = ( payload ) ->
-    console.log "[#{new Date}] GITHUB ISSUE COMMENT TO #{payload.repository.name} ##{payload.issue.number} BY #{payload.sender.login}"
-    "#{payload.sender.login} さんが #{payload.repository.name} のIssue ##{payload.issue.number} にコメントを書きました。\n#{payload.comment.html_url}"
-
-  issues = ( payload ) ->
-    switch payload.action
-      when 'opened', 'closed', 'reopened'
-        console.log "[#{new Date}] GITHUB ISSUE #{payload.action.toUpperCase()} TO #{payload.repository.name} ##{payload.issue.number} BY #{payload.sender.login}"
-        "#{payload.sender.login} さんが #{payload.repository.name} のIssue ##{payload.issue.number} 「#{payload.issue.title}」 を#{action_jpn( payload.action )}しました。\n#{payload.issue.html_url}"
-
-  pull_request = ( payload ) ->
-    switch payload.action
-      when 'opened', 'closed', 'reopened'
-        console.log "[#{new Date}] GITHUB PULL REQUEST #{payload.action.toUpperCase()} TO #{payload.repository.name} ##{payload.pull_request.number} BY #{payload.sender.login}"
-        "#{payload.sender.login} さんが #{payload.repository.name} のPullRequest ##{payload.pull_request.number} 「#{payload.pull_request.title}」 を#{action_jpn( payload.action )}しました。\n#{payload.pull_request.html_url}"
-
-  pull_request_review_comment = ( payload ) ->
-    console.log "[#{new Date}] GITHUB PULL REQUEST COMMENT TO #{payload.repository.name} ##{payload.pull_request.number} BY #{payload.sender.login}"
-    "#{payload.sender.login} さんが #{payload.repository.name} のPullRequest ##{payload.pull_request.number} にコメントを書きました。\n#{payload.comment.html_url}"
-
-  push = ( payload ) ->
-    console.log "[#{new Date}] GITHUB PUSH TO #{payload.repository.name} BY #{payload.pusher.name}"
-    message = "#{payload.pusher.name} さんが #{payload.repository.name} に#{payload.commits.length}件のcommitをpushしました。"
-    for commit in payload.commits
-      message += "\n<#{commit.id[0..6]}> #{commit.message}"
-    message += "\n#{payload.compare}"
-    message
-
-  robot.router.post '/github/hook', ( req, res ) ->
-    query   = querystring.parse url.parse( req.url ).query
-    room    = query.room
-    event   = req.headers['x-github-event']
+  robot.router.post '/github/hook', (req, res) ->
+    event = req.headers['x-github-event']
     payload = req.body
-    message = ''
+    query = querystring.parse url.parse(req.url).query
+    room = query.room
     res.send 404 unless room
 
     switch event
-      when 'commit_comment'              then message = commit_comment              payload
-      when 'gollum'                      then message = gollum                      payload
-      when 'issue_comment'               then message = issue_comment               payload
-      when 'issues'                      then message = issues                      payload
-      when 'pull_request'                then message = pull_request                payload
-      when 'pull_request_review_comment' then message = pull_request_review_comment payload
-      when 'push'                        then message = push                        payload
+      when 'commit_comment'
+        say room, commit_comment(payload)
+      when 'gollum'
+        say room, gollum(payload)
+      when 'issue_comment'
+        say room, issue_comment(payload)
+      when 'issues'
+        say room, issues(payload)
+      when 'pull_request'
+        say room, pull_request(payload)
+      when 'pull_request_review_comment'
+        say room, pull_request_review_comment(payload)
+      when 'push'
+        say room, push(payload)
 
-    say room, message if message
     res.send 200
