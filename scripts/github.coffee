@@ -38,7 +38,7 @@ pull_request_review_comment = (p) ->
 
 push = (p) ->
   msg = "#{p.pusher.name} pushed #{p.commits.length} commits "
-  msg += "to #{p.repository.name}.\n"
+  msg += "to #{p.repository.name}."
   for commit in p.commits
     msg += "\n<#{commit.id[0..6]}> #{commit.message}"
   msg += "\n#{p.compare}"
