@@ -53,7 +53,7 @@ module.exports = (robot) ->
     payload = req.body
     query = querystring.parse url.parse(req.url).query
     room = query.room
-    res.send 404 unless room
+    res.send 400 unless room
 
     switch event
       when 'commit_comment'

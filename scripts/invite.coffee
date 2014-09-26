@@ -140,15 +140,20 @@ module.exports = (robot) ->
 
     request.post options, (err, res, body) ->
       if res.statusCode is 200
-        say parseInt(topic_id), "Invited #{mail_address}."
+        say parseInt(topic_id), "Invited #{mail_address.match(/(.+)@.+/)[1]}."
 
   robot.router.get '/typetalk/form', (req, res) ->
     query    = querystring.parse url.parse(req.url).query
     topic_id = query.topic_id
-    res.send 404 unless topic_id
+    unless topic_id
+      res.send 400
+      return
     res.end form_page(topic_id)
 
   robot.router.post '/typetalk/invite', (req, res) ->
     payload = req.body
+    unless payload.mail_address
+      res.send 400
+      return
     invite_member payload.topic_id, payload.mail_address
     res.end submit_page(payload.mail_address)

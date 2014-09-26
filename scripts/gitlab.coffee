@@ -37,7 +37,7 @@ module.exports = (robot) ->
     room = query.room
     payload = req.body
     event = payload.object_kind
-    res.send 404 unless room
+    res.send 400 unless room
 
     switch event
       when 'issue'

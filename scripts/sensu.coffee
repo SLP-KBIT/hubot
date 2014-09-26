@@ -16,7 +16,7 @@ module.exports = (robot) ->
     query = querystring.parse url.parse(req.url).query
     room = query.room
     payload = req.body
-    res.send 404 unless room
+    res.send 400 unless room
 
     if payload.occurrences is 1
       msg = "Alert of #{payload.check.name} occuerrd"
