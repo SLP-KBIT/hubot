@@ -13,10 +13,10 @@ commit_comment = (p) ->
 
 gollum = (p) ->
   msg = "#{p.sender.login} changed #{p.pages.length} pages "
-  msg += "of #{p.repository.name} Wiki."
+  msg += "of #{p.repository.name} Wiki.\n```"
   for page in p.pages
     msg += "\n[#{action_jpn(page.action)}] #{page.page_name} #{page.html_url}"
-  msg
+  msg += '\n```'
 
 issue_comment = (p) ->
   msg = "#{p.sender.login} commented to Issue ##{p.issue.number} "
@@ -38,10 +38,10 @@ pull_request_review_comment = (p) ->
 
 push = (p) ->
   msg = "#{p.pusher.name} pushed #{p.commits.length} commits "
-  msg += "to #{p.repository.name}."
+  msg += "to #{p.repository.name}.\n```"
   for commit in p.commits
     msg += "\n<#{commit.id[0..6]}> #{commit.message}"
-  msg += "\n#{p.compare}"
+  msg += "\n```\n#{p.compare}"
 
 module.exports = (robot) ->
   say = (room, message) ->

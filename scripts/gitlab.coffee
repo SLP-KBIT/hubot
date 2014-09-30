@@ -12,10 +12,10 @@ capitalize = (text) ->
 
 push = (payload) ->
   msg = "#{payload.user_name} pushed #{payload.commits.length} commits "
-  msg += "#{payload.repository.name}."
+  msg += "#{payload.repository.name}.\n```"
   for commit in payload.commits
     msg += "\n<#{commit.id[0..6]}> #{commit.message} #{commit.url}"
-  msg
+  msg += '\n```'
 
 issue = (payload) ->
   object = payload.object_attributes

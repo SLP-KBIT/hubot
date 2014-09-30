@@ -6,7 +6,7 @@
 #   hubot member pick - Pick member from current topic.
 
 name = (account) ->
-  "#{account.fullName} (#{account.name})"
+  "@#{account.fullName} #{account.name}"
 
 module.exports = (robot) ->
   topic_members = (topic_id) ->
@@ -43,7 +43,7 @@ module.exports = (robot) ->
       return
 
     list = (name account for account in members)
-    msg.reply '\n' + list.join '\n'
+    msg.reply '\n```\n' + list.join('\n') + '\n```'
 
   robot.respond /member\ pick$/i, (msg) ->
     topic_id = msg.envelope.room

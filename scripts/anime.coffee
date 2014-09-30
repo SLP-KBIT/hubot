@@ -44,7 +44,7 @@ module.exports = (robot) ->
     if list.length is 0
       msg.reply 'No result.'
       return
-    msg.reply '\n' + list.join '\n'
+    msg.reply '\n```\n' + list.join('\n') + '\n```'
 
   robot.respond /anime\s+today$/i, (msg) ->
     animes = animemap()
@@ -56,7 +56,7 @@ module.exports = (robot) ->
     if list.length is 0
       msg.reply 'No result.'
       return
-    msg.reply '\n' + list.join '\n'
+    msg.reply '\n```\n' + list.join('\n') + '\n```'
 
   robot.respond /anime\s+search\s+(.+)$/i, (msg) ->
     keyword = msg.match[1]
@@ -70,4 +70,4 @@ module.exports = (robot) ->
     if list.length is 0
       msg.reply 'No result.'
       return
-    msg.reply '\n' + list.join '\n'
+    msg.reply '\n```\n' + list.join('\n') + '\n```'

@@ -20,7 +20,8 @@ module.exports = (robot) ->
 
     if payload.occurrences is 1 and payload.check.status > 0
       msg = "Alert of #{payload.check.name} occuerrd"
-      msg += " in #{payload.client.name}.\n#{payload.check.output}"
+      msg += " in #{payload.client.name}.\n"
+      msg += "```\n#{payload.check.output}\n```"
       say room, msg
 
     res.send 200

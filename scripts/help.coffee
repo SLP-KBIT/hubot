@@ -24,4 +24,4 @@ module.exports = ( robot ) ->
     cmds = cmds.map ( cmd ) ->
       cmd = cmd.replace /^hubot/i, robot.name.toLowerCase()
 
-    msg.reply '\n' + cmds.join '\n'
+    msg.reply '\n```\n' + cmds.join('\n') + '\n```'
