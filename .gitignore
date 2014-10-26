@@ -5,3 +5,5 @@ bin/run.local
 .bundle
 vendor/bundler
 Gemfile.lock
+.envrc
+
