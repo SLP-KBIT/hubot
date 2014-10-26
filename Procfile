@@ -1,1 +1,1 @@
-web: bin/huboco -a typetalk
+web: bin/hubot -a typetalk
